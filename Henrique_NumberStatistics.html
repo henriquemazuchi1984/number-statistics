@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lab 6</title>		
+		<style>
+			body{
+				font-family:  		Verdana;		
+				background-color: 	white;
+				color:				blue;
+				font-size: 			125%	
+			}
+			
+			.SelType {
+				font-family: 		Verdana;
+				font-size: 			11pt;
+				border: 			1px solid #07A2FE;
+				color: 				black;
+				background-color:	aliceblue;
+				height: 			25px;
+				text-align: 		left;
+			}
+					
+			#output{
+				font-family:	Arial;
+				font-size:		14pt;
+				background-color:#FECDCD;
+				border: 		12px double black;			
+				color: 			#523620;
+				text-align: 	center;
+				padding: 		20px;
+				
+				position:		absolute;
+				top: 			200px;
+				left: 			30px;
+				width: 			700px;
+				height: 		200px;
+			}
+					
+			#selectionOne {
+				font-family: Verdana, Arial, Helvetica;
+				font-size: 10pt;
+				color: white;
+				
+				position: absolute;
+				top: 140px;
+				left: 50px;
+				width: 150px;
+				height: 100px;
+			}				
+		</style>
+	</head>
+	<body>
+		<h1>Number Statistics</h1>
+		<div id="divNumbers">[Numbers Array Here]</div>
+
+		<div id="selectionOne">
+			<select id="numberStats" class="SelType" onchange="getSelectedStat();">
+				<option>Number Stats:</option>	<!-- default -->
+				<option>Average</option>						
+				<option>Maximum</option>				
+				<option>AverageLastHalf</option>
+				<option>RandomNumbers</option>					
+				<option>CountIfOver35</option>
+				<option>AverageIfOver50</option>										
+			</select>
+		</div>			
+						
+		<div id="output"></div>		
+		
+		<script>
+			// Declare a global array for use in all functions
+			var numbers = [12,89,91,-6,-45,6,4,3,34,-99,329,567,101,23];
+            				    
+
+			// Load Array with values when the page loads
+			loadArray();
+			
+			// Load Global Array
+			function loadArray()
+			{
+                var numbers = [12,89,91,-6,-45,6,4,3,34,-99,329,567,101,23];
+				document.getElementById("divNumbers").innerHTML = numbers;
+			}
+
+			//Output Selected Array
+			function getSelectedStat()
+			{
+			//Output dropdown selection
+			var Checkbutton = document.getElementById("numberStats").value;  
+			
+
+			if ( Checkbutton == "Average")
+			{
+				document.getElementById("output").innerHTML = "Average = " + getAverage();
+				
+			}
+			else if ( Checkbutton == "Maximum")
+			{
+				document.getElementById("output").innerHTML = "Maximum = " + getMaximum();
+			}
+            else if ( Checkbutton == "AverageLastHalf")
+			{
+				document.getElementById("output").innerHTML = "Average Last Half = " + getAverageLastHalf();
+			}
+			else if ( Checkbutton == "RandomNumbers")
+			{
+				document.getElementById("output").innerHTML = "Random Numbers Array = " + randomArray();
+				
+				// Load Global Array new random numbers
+				document.getElementById("divNumbers").innerHTML = numbers;
+			}
+			else if ( Checkbutton == "CountIfOver35")
+			{
+				document.getElementById("output").innerHTML = "Count if Over 35 = " + getCountIf();
+			}
+			else if ( Checkbutton == "AverageIfOver50")
+			{
+				document.getElementById("output").innerHTML = "Average if Over 50 = " + getAverageIf();
+			}
+			
+            }
+			
+			// Generate Average of the selected array
+			function getAverage()
+			{
+				var total = 0;
+				for (var i = 0 ; i < numbers.length ; i++)
+				{ total += numbers[i] }
+				return ( total / numbers.length ).toFixed(2);
+			}
+        					
+			// Load Highest number of the selected array
+			function getMaximum()
+			{
+				var max = 0;
+				for (var i = 0 ; i < numbers.length ; i++)
+				{ 
+					(max > numbers[i]);
+				}
+				var max = Math.max(...numbers);
+				return max;
+			}
+			
+			// Generate Average of the last half of the array
+			function getAverageLastHalf()
+			{					
+				var halfavg = ( Math.ceil ((numbers.length / 2)) );
+				var avghalf = numbers.slice(halfavg);
+				var sum =  0;
+				for ( var total = 0; total < halfavg; total++ )
+				{
+					sum += avghalf[total];
+				}
+				return ( sum / avghalf.length ).toFixed(2);
+			}
+			
+			// Generate random numbers between 1 and 100 / Overwrite global array
+			function randomArray()
+			{
+				// Check the length of array and change for random numbers between 1 and 100-inclusive-
+				for (var i = 0; i < numbers.length; i++)
+            {
+                if (numbers[i] > 0);
+				numbers[i] = Math.floor(Math.random() * (100 - 1 + 1)) + 1;
+				// Equation for Random Numbers in Range: Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+				return numbers;
+			}	
+			
+			// Count if number > 35 in the selected array
+			function getCountIf()
+			{
+				var countif = 0;
+				for (var i = 0; i < numbers.length; ++i) 
+				{
+					if(numbers[i] > 35)
+					countif++;
+				}
+				return countif;
+			}
+			
+			// Generate Average if number > 50 in the selected array
+			function getAverageIf()
+			{			
+				// Count Array Over 50
+				var countif = 0;
+				for (var i = 0; i < numbers.length; ++i) 
+				{   if(numbers[i] > 50)
+					countif++;
+				}
+				
+				// Sum Array Over 50
+				var total = 0;
+				for (var i = 0 ; i < numbers.length ; i++)
+				{   if(numbers[i] > 50)
+					total += numbers[i];
+					 }
+				 
+				// Sum / Count = Average
+				return ( total / countif++ ).toFixed(2);
+			}
+
+		</script>
+	</body>
+</html>
